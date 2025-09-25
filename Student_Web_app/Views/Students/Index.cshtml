@@ -1,0 +1,35 @@
+﻿@model IEnumerable<student.Models.Student>
+@{
+    ViewData["Title"] = "Студенты";
+}
+<h1>Студенты</h1>
+<p>
+    <a class="btn btn-primary" asp-action="Create">Добавить студента</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ФИО</th>
+            <th>Дата зачисления</th>
+            <th>Классы</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var s in Model)
+    {
+        <tr>
+            <td>@s.FullName</td>
+            <td>@(s.EnrollmentDate?.ToString("yyyy-MM-dd"))</td>
+            <td>
+                @string.Join(", ", s.Enrollments.Select(e => e.Class.Title))
+            </td>
+            <td class="text-end">
+                <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@s.Id">Открыть</a>
+                <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@s.Id">Изменить</a>
+                <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@s.Id">Удалить</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

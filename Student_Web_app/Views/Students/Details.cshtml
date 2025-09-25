@@ -1,0 +1,26 @@
+﻿@model student.Models.Student
+    @{
+    ViewData["Title"] = "Студент";
+}
+<h1>@Model.FullName</h1>
+    <dl class="row">
+    <dt class="col-sm-2">Дата зачисления</dt>
+    <dd class="col-sm-10">@Model.EnrollmentDate?.ToString("yyyy-MM-dd")</dd>
+    <dt class="col-sm-2">Классы</dt>
+    <dd class="col-sm-10">
+    @if (Model.Enrollments.Any())
+{
+    <ul>
+        @foreach (var e in Model.Enrollments)
+    {
+        <li>@e.Class.Title (@e.Class.Code)</li>
+    }
+    </ul>
+}
+else { <em>Нет</em> }
+</dd>
+    </dl>
+    <p>
+    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.Id">Изменить</a>
+    <a class="btn btn-secondary" asp-action="Index">Назад</a>
+    </p>

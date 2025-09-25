@@ -1,0 +1,41 @@
+﻿@model IEnumerable<student.Models.Class>
+    @{
+    ViewData["Title"] = "Классы";
+}
+<h1>Классы</h1>
+    <p>
+    <a class="btn btn-primary" asp-action="Create">Добавить класс</a>
+</p>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Пока нет ни одного класса.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Код</th>
+                <th>Название</th>
+                <th>Зачислений</th>
+                <th style="width:210px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Code</td>
+                <td>@item.Title</td>
+                <td>@(item.Enrollments?.Count ?? 0)</td>
+                <td>
+                    <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.Id">Детали</a>
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

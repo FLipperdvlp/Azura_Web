@@ -1,0 +1,44 @@
+﻿@model student.Models.Student
+    @{
+    ViewData["Title"] = "Новый студент";
+    var classes = (IEnumerable<student.Models.Class>)ViewBag.Classes;
+    var selectedIds = (int[])ViewBag.SelectedClassIds;
+}
+<h1>Новый студент</h1>
+    <form asp-action="Create" method="post">
+    <div class="mb-3">
+    <label asp-for="FirstName" class="form-label"></label>
+    <input asp-for="FirstName" class="form-control" />
+    <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+    <label asp-for="LastName" class="form-label"></label>
+    <input asp-for="LastName" class="form-control" />
+    <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+    <label asp-for="EnrollmentDate" class="form-label"></label>
+    <input asp-for="EnrollmentDate" type="date" class="form-control" />
+    <span asp-validation-for="EnrollmentDate" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <label class="form-label mb-0">Классы</label>
+        <a class="btn btn-sm btn-outline-primary" asp-controller="Classes" asp-action="Create" target="_blank" rel="noopener">
+            Добавить класс
+        </a>
+    </div>
+    <select name="selectedClasses" class="form-select" multiple size="6">
+                                                                     @foreach (var c in classes)
+{
+    <option value="@c.Id" selected="@(selectedIds.Contains(c.Id))">@c.Title (@c.Code)</option>
+}
+</select>
+    <div class="form-text">Удерживайте Ctrl/Command для множественного выбора.</div>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a class="btn btn-secondary" asp-action="Index">Отмена</a>
+    </form>
+    @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
